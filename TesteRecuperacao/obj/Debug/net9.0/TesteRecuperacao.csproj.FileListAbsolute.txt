@@ -352,3 +352,4 @@ C:\Users\GUILHERME\Desktop\Teste\TesteRecuperacao\obj\Debug\net9.0\refint\TesteR
 C:\Users\GUILHERME\Desktop\Teste\TesteRecuperacao\obj\Debug\net9.0\TesteRecuperacao.pdb
 C:\Users\GUILHERME\Desktop\Teste\TesteRecuperacao\obj\Debug\net9.0\TesteRecuperacao.genruntimeconfig.cache
 C:\Users\GUILHERME\Desktop\Teste\TesteRecuperacao\obj\Debug\net9.0\ref\TesteRecuperacao.dll
+C:\Users\GUILHERME\Desktop\Teste\TesteRecuperacao\obj\Debug\net9.0\TesteRecuperacao.sourcelink.json

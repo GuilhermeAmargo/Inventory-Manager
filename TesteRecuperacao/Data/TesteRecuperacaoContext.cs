@@ -15,5 +15,7 @@ namespace TesteRecuperacao.Data
         }
 
         public DbSet<TesteRecuperacao.Models.Tools> Tools { get; set; } = default!;
+        public DbSet<Withdrawal> Withdrawal { get; set; } = default!;
+        public DbSet<WithdrawalTool> WithdrawalTool { get; set; } = default!;
     }
 }
