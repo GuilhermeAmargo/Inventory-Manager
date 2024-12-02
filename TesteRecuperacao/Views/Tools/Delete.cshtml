@@ -1,0 +1,37 @@
+@model TesteRecuperacao.Models.Tools
+
+@{
+    ViewData["Title"] = "Excluir Ferramenta";
+}
+
+<h1>Excluir Ferramenta</h1>
+
+<div class="card mt-3">
+    <div class="card-header">
+        <h4 class="mb-0 text-danger">Confirmação de Exclusão</h4>
+    </div>
+    <div class="card-body">
+        <p>Tem certeza de que deseja excluir esta ferramenta?</p>
+        <dl class="row">
+            <dt class="col-sm-3">Nome</dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+            <dt class="col-sm-3">Quantidade</dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Quantity)
+            </dd>
+            <dt class="col-sm-3">Categoria</dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Category)
+            </dd>
+        </dl>
+    </div>
+    <div class="card-footer text-end">
+        <form asp-action="Delete" class="d-inline">
+            <input type="hidden" asp-for="Id" />
+            <button type="submit" class="btn btn-danger">Excluir</button>
+        </form>
+        <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    </div>
+</div>

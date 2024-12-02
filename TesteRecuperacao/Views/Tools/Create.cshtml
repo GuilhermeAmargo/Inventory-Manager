@@ -1,0 +1,49 @@
+@model TesteRecuperacao.Models.Tools
+
+@{
+    ViewData["Title"] = "Inserir Ferramenta";
+}
+
+<h1 class="mb-4">Inserir Nova Ferramenta</h1>
+
+<h4>Detalhes da Ferramenta</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <!-- Nome -->
+            <div class="form-group mb-3">
+                <label asp-for="Name" class="control-label">Nome</label>
+                <input asp-for="Name" class="form-control" placeholder="Digite o nome da ferramenta" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <!-- Quantidade -->
+            <div class="form-group mb-3">
+                <label asp-for="Quantity" class="control-label">Quantidade</label>
+                <input asp-for="Quantity" class="form-control" placeholder="Digite a quantidade disponível" />
+                <span asp-validation-for="Quantity" class="text-danger"></span>
+            </div>
+
+            <!-- Categoria -->
+            <div class="form-group mb-3">
+                <label asp-for="Category" class="control-label">Categoria</label>
+                <input asp-for="Category" class="form-control" placeholder="Digite a categoria da ferramenta" />
+                <span asp-validation-for="Category" class="text-danger"></span>
+            </div>
+
+            <!-- Botões -->
+            <div class="form-group">
+                <input type="submit" value="Salvar" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Voltar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
