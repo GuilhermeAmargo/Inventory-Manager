@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -23,40 +24,49 @@ namespace TesteRecuperacao.Controllers
         // GET: Tools
     public async Task<IActionResult> Index(string toolCategory, string searchString)
     {
-        if (_context.Tools == null)
+        try 
         {
-            return Problem("Entity set 'TesteRecuperacaoContext.Tools' is null.");
+            if (_context.Tools == null)
+            {
+                return View("Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            }
+
+            // Consulta LINQ para obter lista de categorias.
+            IQueryable<string> categoryQuery = from t in _context.Tools
+                                            orderby t.Category
+                                            select t.Category;
+
+            var tools = from t in _context.Tools
+                        select t;
+
+            // Filtrar por nome, se a pesquisa for fornecida.
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                tools = tools.Where(t => t.Name!.ToUpper().Contains(searchString.ToUpper()));
+            }
+
+            // Filtrar por categoria, se selecionada.
+            if (!string.IsNullOrEmpty(toolCategory))
+            {
+                tools = tools.Where(t => t.Category == toolCategory);
+            }
+
+            // Criar ViewModel para passar os dados à view.
+            var toolCategoryVM = new ToolCategoryViewModel
+            {
+                Categories = new SelectList(await categoryQuery.Distinct().ToListAsync()),
+                Tools = await tools.ToListAsync()
+            };
+
+            return View(toolCategoryVM);
         }
-
-        // Consulta LINQ para obter lista de categorias.
-        IQueryable<string> categoryQuery = from t in _context.Tools
-                                        orderby t.Category
-                                        select t.Category;
-
-        var tools = from t in _context.Tools
-                    select t;
-
-        // Filtrar por nome, se a pesquisa for fornecida.
-        if (!string.IsNullOrEmpty(searchString))
+        catch (Exception)
         {
-            tools = tools.Where(t => t.Name!.ToUpper().Contains(searchString.ToUpper()));
+            // Retornar a view de erro, passando uma mensagem de erro, caso o banco de dados falhe
+            return View("Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
         }
-
-        // Filtrar por categoria, se selecionada.
-        if (!string.IsNullOrEmpty(toolCategory))
-        {
-            tools = tools.Where(t => t.Category == toolCategory);
-        }
-
-        // Criar ViewModel para passar os dados à view.
-        var toolCategoryVM = new ToolCategoryViewModel
-        {
-            Categories = new SelectList(await categoryQuery.Distinct().ToListAsync()),
-            Tools = await tools.ToListAsync()
-        };
-
-        return View(toolCategoryVM);
     }
+
 
 
         // GET: Tools/Details/5
